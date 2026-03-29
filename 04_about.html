@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maison — NOIRE Haute Parfumerie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Raleway:wght@100;200;300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; user-select:none; }
+    :root { --black:#080608; --deep:#0e0b12; --purple:#1a0f2e; --violet:#2d1650; --gold:#c9a84c; --gold2:#e8d08a; --rose:#b06080; --cream:#f5ede0; --muted:#7a6e80; --font-d:'Playfair Display',serif; --font-b:'Raleway',sans-serif; }
+    html { scroll-behavior:smooth; overflow-x:hidden; }
+    body { background:var(--black); color:var(--cream); font-family:var(--font-b); font-weight:300; cursor:none; overflow-x:hidden; }
+    #cur { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:difference; transition:transform 0.15s; }
+    #cur-ring { position:fixed; width:44px; height:44px; border:1px solid rgba(201,168,76,0.45); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all 0.2s ease; }
+    #mist-canvas { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5; }
+    nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; justify-content:space-between; align-items:center; padding:32px 70px; transition:all 0.5s; background:rgba(8,6,8,0.93); backdrop-filter:blur(16px); border-bottom:1px solid rgba(201,168,76,0.1); }
+    .logo { font-family:var(--font-d); font-size:1.5rem; letter-spacing:0.5em; color:var(--cream); text-decoration:none; }
+    .nav-links { display:flex; gap:44px; list-style:none; }
+    .nav-links a { color:rgba(245,237,224,0.6); text-decoration:none; font-size:0.68rem; letter-spacing:0.25em; text-transform:uppercase; transition:color 0.3s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+
+    /* VISUAL HERO */
+    .page-hero { min-height:85vh; display:flex; align-items:center; padding:160px 70px 80px; position:relative; overflow:hidden; background:var(--black); }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 20% 60%, rgba(45,22,80,0.7) 0%, transparent 55%); pointer-events:none; }
+    .page-hero::after { content:'MAISON'; position:absolute; right:-60px; top:50%; transform:translateY(-50%); font-family:var(--font-d); font-size:23vw; color:rgba(201,168,76,0.025); line-height:1; pointer-events:none; white-space:nowrap; letter-spacing:-0.02em; }
+    .hero-inner { position:relative; z-index:1; max-width:1300px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .hero-text .eyebrow { font-size:0.62rem; letter-spacing:0.6em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:24px; }
+    .hero-text h1 { font-family:var(--font-d); font-size:clamp(4rem,8vw,8rem); font-weight:300; line-height:0.9; color:var(--cream); margin-bottom:28px; }
+    .hero-text h1 em { font-style:italic; background:linear-gradient(135deg,var(--gold),var(--rose),var(--gold2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero-text p { font-size:0.88rem; color:var(--muted); line-height:2.2; margin-bottom:40px; max-width:460px; }
+    .hero-text .btn-gold { display:inline-block; padding:15px 44px; background:transparent; border:1px solid var(--gold); color:var(--gold); text-decoration:none; font-size:0.68rem; letter-spacing:0.3em; text-transform:uppercase; transition:all 0.4s; position:relative; overflow:hidden; cursor:none; }
+    .hero-text .btn-gold::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold),var(--rose)); transform:scaleX(0); transform-origin:left; transition:transform 0.4s; z-index:-1; }
+    .hero-text .btn-gold:hover { color:var(--black); border-color:transparent; }
+    .hero-text .btn-gold:hover::before { transform:scaleX(1); }
+    .hero-visual { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+    .hv-card { padding:40px 32px; border:1px solid rgba(201,168,76,0.08); background:rgba(201,168,76,0.03); transition:all 0.4s; position:relative; overflow:hidden; }
+    .hv-card::after { content:''; position:absolute; bottom:0; left:0; height:2px; width:0; background:linear-gradient(to right,var(--rose),var(--gold)); transition:width 0.5s; }
+    .hv-card:hover { background:rgba(201,168,76,0.07); border-color:rgba(201,168,76,0.2); }
+    .hv-card:hover::after { width:100%; }
+    .hv-icon { font-size:2rem; display:block; margin-bottom:16px; }
+    .hv-num { font-family:var(--font-d); font-size:3rem; color:var(--gold); font-weight:300; line-height:1; display:block; margin-bottom:6px; }
+    .hv-label { font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:10px; }
+    .hv-desc { font-size:0.72rem; color:rgba(245,237,224,0.25); line-height:1.8; }
+
+    .reveal { opacity:0; transform:translateY(48px); transition:opacity 1s ease,transform 1s ease; }
+    .reveal.v { opacity:1; transform:translateY(0); }
+    .rd1{transition-delay:0.1s;}.rd2{transition-delay:0.22s;}.rd3{transition-delay:0.36s;}.rd4{transition-delay:0.5s;}
+
+    /* INTRO */
+    .intro-sec { background:var(--deep); padding:130px 70px; }
+    .intro { max-width:1300px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center; }
+    .intro-visual { position:relative; height:600px; }
+    .bottle-wrap { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:220px; height:360px; animation:bFloat 5s ease-in-out infinite; }
+    @keyframes bFloat { 0%,100%{transform:translate(-50%,-50%) translateY(0) rotate(-2deg);}50%{transform:translate(-50%,-50%) translateY(-18px) rotate(2deg);} }
+    .bottle { width:100%; height:100%; background:linear-gradient(160deg,rgba(45,22,80,0.9),rgba(14,11,18,0.95) 50%,rgba(45,22,80,0.5)); border-radius:12px 12px 20px 20px; position:relative; overflow:hidden; border:1px solid rgba(201,168,76,0.3); box-shadow:0 0 80px rgba(45,22,80,0.8),0 0 30px rgba(201,168,76,0.1),inset 0 0 40px rgba(176,96,128,0.1); }
+    .bottle::before { content:''; position:absolute; top:0; left:20%; width:30%; height:100%; background:linear-gradient(to right,transparent,rgba(255,255,255,0.06),transparent); }
+    .bottle-label { position:absolute; bottom:60px; left:50%; transform:translateX(-50%); text-align:center; width:80%; }
+    .bottle-name { font-family:var(--font-d); font-size:1.3rem; color:var(--gold); letter-spacing:0.2em; }
+    .bottle-sub { font-size:0.5rem; letter-spacing:0.5em; text-transform:uppercase; color:rgba(201,168,76,0.5); margin-top:4px; }
+    .bottle-cap { width:60px; height:30px; background:linear-gradient(to bottom,rgba(201,168,76,0.6),rgba(201,168,76,0.2)); border-radius:4px 4px 0 0; position:absolute; top:-30px; left:50%; transform:translateX(-50%); border:1px solid rgba(201,168,76,0.4); border-bottom:none; }
+    .b-orb1 { position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(45,22,80,0.6),transparent); top:-60px; right:-60px; filter:blur(40px); animation:oAnim 7s ease-in-out infinite; }
+    .b-orb2 { position:absolute; width:250px; height:250px; border-radius:50%; background:radial-gradient(circle,rgba(176,96,128,0.4),transparent); bottom:-40px; left:-40px; filter:blur(40px); animation:oAnim 9s 2s ease-in-out infinite; }
+    @keyframes oAnim { 0%,100%{transform:scale(1);}50%{transform:scale(1.2);} }
+    .ring1,.ring2,.ring3 { position:absolute; border-radius:50%; border:1px solid rgba(201,168,76,0.08); top:50%; left:50%; transform:translate(-50%,-50%); animation:rPulse 4s ease-in-out infinite; }
+    .ring1{width:300px;height:300px;} .ring2{width:420px;height:420px;animation-delay:0.8s;} .ring3{width:540px;height:540px;animation-delay:1.6s;}
+    @keyframes rPulse { 0%,100%{opacity:0.6;transform:translate(-50%,-50%) scale(1);}50%{opacity:0.3;transform:translate(-50%,-50%) scale(1.04);} }
+    .intro-text .sl { font-size:0.62rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; display:block; }
+    .intro-text h2 { font-family:var(--font-d); font-size:clamp(2.5rem,4vw,4.2rem); font-weight:300; line-height:1.1; color:var(--cream); margin-bottom:28px; }
+    .intro-text h2 em { font-style:italic; color:var(--rose); }
+    .gold-line { width:50px; height:1px; background:var(--gold); margin:32px 0; }
+    .intro-text p { color:var(--muted); line-height:2.1; font-size:0.88rem; margin-bottom:18px; }
+    .i-stats { display:flex; gap:44px; margin-top:44px; }
+    .istat span:first-child { font-family:var(--font-d); font-size:2.8rem; color:var(--gold); display:block; font-weight:300; }
+    .istat span:last-child { font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--muted); margin-top:4px; display:block; }
+
+    /* ═══ NEW: TIMELINE ═══ */
+    .timeline-sec { padding:130px 70px; background:var(--black); overflow:hidden; }
+    .tl-inner { max-width:1100px; margin:0 auto; }
+    .tl-inner .sec-eye { font-size:0.62rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:18px; }
+    .tl-inner h2 { font-family:var(--font-d); font-size:clamp(2.5rem,4vw,4rem); font-weight:300; color:var(--cream); margin-bottom:80px; }
+    .tl-inner h2 em { font-style:italic; color:var(--gold); }
+    .timeline { position:relative; }
+    .timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:1px; background:linear-gradient(to bottom,transparent,rgba(201,168,76,0.3),rgba(201,168,76,0.3),transparent); transform:translateX(-50%); }
+    .tl-item { display:grid; grid-template-columns:1fr 1fr; gap:80px; margin-bottom:70px; align-items:center; }
+    .tl-item:nth-child(even) .tl-content { order:2; text-align:left; padding-left:60px; padding-right:0; }
+    .tl-item:nth-child(even) .tl-year-col { order:1; text-align:right; }
+    .tl-year-col { position:relative; text-align:right; padding-right:60px; }
+    .tl-year-col::after { content:''; position:absolute; right:-5px; top:50%; transform:translateY(-50%); width:10px; height:10px; border-radius:50%; background:var(--gold); box-shadow:0 0 20px rgba(201,168,76,0.5); }
+    .tl-item:nth-child(even) .tl-year-col::after { right:auto; left:-5px; }
+    .tl-year { font-family:var(--font-d); font-size:4rem; font-weight:300; color:rgba(201,168,76,0.15); line-height:1; display:block; }
+    .tl-era { font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); display:block; margin-top:4px; }
+    .tl-content { padding-right:60px; }
+    .tl-title { font-family:var(--font-d); font-size:1.5rem; font-weight:300; color:var(--cream); margin-bottom:12px; }
+    .tl-text { font-size:0.82rem; color:var(--muted); line-height:2.1; }
+
+    /* ═══ PERFUMERS ═══ */
+    .perf-sec { background:var(--deep); padding:130px 70px; }
+    .perf-inner { max-width:1300px; margin:0 auto; }
+    .perf-inner > .sec-h { font-family:var(--font-d); font-size:clamp(2.5rem,4vw,4rem); font-weight:300; color:var(--cream); text-align:center; margin-bottom:72px; }
+    .perf-inner > .sec-h em { font-style:italic; color:var(--gold); }
+    .perf-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(201,168,76,0.08); }
+    .perf-card { background:var(--deep); padding:52px 40px; text-align:center; transition:background 0.4s; position:relative; overflow:hidden; }
+    .perf-card:hover { background:rgba(45,22,80,0.3); }
+    .perf-card::after { content:''; position:absolute; bottom:0; left:0; height:2px; width:0; background:linear-gradient(to right,var(--rose),var(--gold)); transition:width 0.6s; }
+    .perf-card:hover::after { width:100%; }
+    .perf-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,var(--violet),var(--rose)); margin:0 auto 24px; display:flex; align-items:center; justify-content:center; font-size:2rem; border:1px solid rgba(201,168,76,0.2); }
+    .perf-name { font-family:var(--font-d); font-size:1.4rem; font-weight:300; color:var(--cream); margin-bottom:8px; }
+    .perf-role { font-size:0.6rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; display:block; }
+    .perf-bio { font-size:0.8rem; color:var(--muted); line-height:2.1; }
+
+    /* ═══ NEW: AWARDS WALL ═══ */
+    .awards-sec { padding:130px 70px; background:var(--purple); }
+    .awards-inner { max-width:1300px; margin:0 auto; }
+    .awards-inner .sec-eye { font-size:0.62rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:18px; }
+    .awards-inner h2 { font-family:var(--font-d); font-size:clamp(2.5rem,4vw,4rem); font-weight:300; color:var(--cream); margin-bottom:70px; }
+    .awards-inner h2 em { font-style:italic; color:var(--gold2); }
+    .awards-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+    .award-card { background:rgba(0,0,0,0.3); padding:44px 32px; text-align:center; border:1px solid rgba(201,168,76,0.06); transition:all 0.4s; position:relative; overflow:hidden; }
+    .award-card::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 0%,rgba(201,168,76,0.06),transparent 60%); opacity:0; transition:opacity 0.4s; }
+    .award-card:hover { border-color:rgba(201,168,76,0.2); }
+    .award-card:hover::before { opacity:1; }
+    .award-icon { font-size:2.8rem; display:block; margin-bottom:18px; filter:drop-shadow(0 0 16px rgba(201,168,76,0.3)); }
+    .award-title { font-family:var(--font-d); font-size:1.1rem; font-weight:300; color:var(--cream); margin-bottom:8px; }
+    .award-org { font-size:0.58rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:12px; }
+    .award-year { font-family:var(--font-d); font-size:2.5rem; color:rgba(201,168,76,0.12); font-weight:300; line-height:1; display:block; margin-bottom:12px; }
+    .award-desc { font-size:0.76rem; color:var(--muted); line-height:1.9; }
+
+    /* EXPERIENCE */
+    .experience { background:var(--deep); padding:130px 70px; }
+    .exp-inner { max-width:1300px; margin:0 auto; }
+    .exp-inner h2 { font-family:var(--font-d); font-size:clamp(2.5rem,4vw,4rem); font-weight:300; color:var(--cream); margin-bottom:72px; text-align:center; }
+    .exp-inner h2 em { font-style:italic; color:var(--rose); }
+    .exp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(201,168,76,0.08); }
+    .exp-card { background:var(--deep); padding:52px 40px; position:relative; overflow:hidden; transition:background 0.5s; }
+    .exp-card:hover { background:rgba(45,22,80,0.5); }
+    .exp-num { font-family:var(--font-d); font-size:6rem; color:rgba(201,168,76,0.07); font-weight:300; line-height:1; margin-bottom:20px; transition:color 0.5s; }
+    .exp-card:hover .exp-num { color:rgba(201,168,76,0.18); }
+    .exp-icon { font-size:2.2rem; margin-bottom:18px; display:block; }
+    .exp-title { font-family:var(--font-d); font-size:1.5rem; font-weight:300; color:var(--cream); margin-bottom:14px; }
+    .exp-text { font-size:0.8rem; color:var(--muted); line-height:2; }
+    .exp-line { position:absolute; bottom:0; left:0; height:2px; width:0; background:linear-gradient(to right,var(--rose),var(--gold)); transition:width 0.6s ease; }
+    .exp-card:hover .exp-line { width:100%; }
+
+    footer { background:var(--black); padding:80px 70px 44px; border-top:1px solid rgba(201,168,76,0.08); }
+    .ft { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:60px; margin-bottom:60px; }
+    .ft-logo { font-family:var(--font-d); font-size:2.2rem; letter-spacing:0.4em; color:var(--cream); display:block; margin-bottom:18px; }
+    .ft-tag { font-size:0.78rem; color:var(--muted); line-height:2; max-width:230px; }
+    .ft-col h4 { font-size:0.6rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; }
+    .ft-col ul { list-style:none; display:flex; flex-direction:column; gap:13px; }
+    .ft-col a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color 0.3s; }
+    .ft-col a:hover { color:var(--cream); }
+    .ft-bot { border-top:1px solid rgba(255,255,255,0.05); padding-top:28px; display:flex; justify-content:space-between; align-items:center; }
+    .ft-bot p { font-size:0.68rem; color:rgba(122,110,128,0.45); }
+    .socials { display:flex; gap:14px; }
+    .socials a { width:36px; height:36px; border:1px solid rgba(201,168,76,0.15); display:flex; align-items:center; justify-content:center; color:var(--muted); text-decoration:none; font-size:0.72rem; transition:all 0.3s; }
+    .socials a:hover { border-color:var(--gold); color:var(--gold); }
+
+    @media(max-width:900px){ nav{padding:22px 28px;}.nav-links{display:none;} .page-hero{padding:130px 28px 70px;} .hero-inner{grid-template-columns:1fr;} .hero-visual{grid-template-columns:1fr 1fr;} .intro-sec,.timeline-sec,.perf-sec,.awards-sec,.experience{padding:80px 28px;} .intro{grid-template-columns:1fr;} .intro-visual{height:360px;} .timeline::before{left:24px;} .tl-item{grid-template-columns:1fr;gap:20px;} .tl-year-col{text-align:left;padding-right:0;padding-left:50px;} .tl-year-col::after{right:auto;left:-5px;} .tl-item:nth-child(even) .tl-content{order:0;padding-left:50px;padding-right:0;} .tl-item:nth-child(even) .tl-year-col{order:0;text-align:left;} .tl-content{padding-right:0;padding-left:50px;} .perf-grid,.exp-grid{grid-template-columns:1fr 1fr;} .awards-grid{grid-template-columns:1fr 1fr;} .ft{grid-template-columns:1fr 1fr;gap:40px;} }
+    @media(max-width:600px){ .hero-visual,.perf-grid,.exp-grid,.awards-grid{grid-template-columns:1fr;} .ft{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div><canvas id="mist-canvas"></canvas>
+
+<nav id="nav">
+  <a href="01_index.html" class="logo">NOIRE</a>
+  <ul class="nav-links">
+    <li><a href="01_index.html">Home</a></li>
+    <li><a href="02_collection.html">Collection</a></li>
+    <li><a href="04_about.html" class="active">Maison</a></li>
+    <li><a href="03_info.html">Atelier</a></li>
+    <li><a href="05_contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">Notre Histoire · Paris · Since 1934</span>
+      <h1>La <em>Maison</em><br>Noire</h1>
+      <p>Ninety years of <b>olfactory obsession</b>. From a Parisian wine cellar in 1934 to <i>34 boutiques worldwide</i> — the story of a house that refuses to compromise.</p>
+      <a href="#story" class="btn-gold">Discover Our Story</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hv-card reveal rd1">
+        <span class="hv-icon">🏛️</span>
+        <span class="hv-num">1934</span>
+        <span class="hv-label">Year Founded</span>
+        <p class="hv-desc">Born in a Parisian wine cellar on Rue du Faubourg Saint-Honoré</p>
+      </div>
+      <div class="hv-card reveal rd2">
+        <span class="hv-icon">🌍</span>
+        <span class="hv-num">34</span>
+        <span class="hv-label">Boutiques Worldwide</span>
+        <p class="hv-desc">From Paris to Tokyo, New York to Dubai</p>
+      </div>
+      <div class="hv-card reveal rd3">
+        <span class="hv-icon">🏆</span>
+        <span class="hv-num">12+</span>
+        <span class="hv-label">Industry Awards</span>
+        <p class="hv-desc">Including four Prix du Parfum at Cannes</p>
+      </div>
+      <div class="hv-card reveal rd4">
+        <span class="hv-icon">👨‍👩‍👧</span>
+        <span class="hv-num">4th</span>
+        <span class="hv-label">Generation</span>
+        <p class="hv-desc">Still family-owned and led by Élise Beaumont</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO + BOTTLE -->
+<section class="intro-sec" id="story">
+  <div class="intro">
+    <div class="intro-visual reveal">
+      <div class="b-orb1"></div><div class="b-orb2"></div>
+      <div class="ring1"></div><div class="ring2"></div><div class="ring3"></div>
+      <div class="bottle-wrap">
+        <div class="bottle-cap"></div>
+        <div class="bottle"><div class="bottle-label"><div class="bottle-name">NOIRE</div><div class="bottle-sub">Eau de Parfum · 50ml</div></div></div>
+      </div>
+    </div>
+    <div class="intro-text">
+      <span class="sl reveal rd1">La Maison Noire</span>
+      <h2 class="reveal rd2">Crafted from the <em>rarest</em> essences on earth</h2>
+      <div class="gold-line reveal rd2"></div>
+      <p class="reveal rd3">For <b>ninety years</b>, Maison Noire has pursued a singular obsession: the creation of fragrances that do not merely please the senses, but <i>alter the consciousness</i> of those who wear them.</p>
+      <p class="reveal rd3">Each formula is developed over <u>years, not months</u>. Each ingredient is sourced from a single origin, harvested at the precise moment of greatest potency.<br><br>No shortcuts. No compromise.</p>
+      <div class="i-stats reveal rd4">
+        <div class="istat"><span class="snum" data-target="90">0</span><span>Years of craft</span></div>
+        <div class="istat"><span class="snum" data-target="34">0</span><span>Fragrances</span></div>
+        <div class="istat"><span class="snum" data-target="60">0</span><span>Rare ingredients</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ NEW: TIMELINE -->
+<section class="timeline-sec">
+  <div class="tl-inner">
+    <span class="sec-eye reveal">Notre Histoire</span>
+    <h2 class="reveal rd1">Ninety years of <em>excellence</em></h2>
+    <div class="timeline">
+
+      <div class="tl-item reveal rd1">
+        <div class="tl-year-col"><span class="tl-year">1934</span><span class="tl-era">The founding</span></div>
+        <div class="tl-content">
+          <h3 class="tl-title">Maison Noire is born</h3>
+          <p class="tl-text">Auguste Beaumont opens a small atelier on <b>Rue du Faubourg Saint-Honoré</b>, Paris. Working with just <i>twelve ingredients</i>, he creates the first Noire fragrance in a converted wine cellar. The world does not yet know what is coming.</p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal rd1">
+        <div class="tl-year-col"><span class="tl-year">1951</span><span class="tl-era">The breakthrough</span></div>
+        <div class="tl-content">
+          <h3 class="tl-title">Oud Noir debuts at Paris Fashion Week</h3>
+          <p class="tl-text">Auguste's son, <b>Édouard Beaumont</b>, presents the now-legendary <u>Oud Noir</u> at Paris Fashion Week. Coco Chanel is among the first to wear it. <i>Within a week, every bottle is sold.</i> The waiting list stretches to six months.</p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal rd1">
+        <div class="tl-year-col"><span class="tl-year">1979</span><span class="tl-era">The expansion</span></div>
+        <div class="tl-content">
+          <h3 class="tl-title">First international boutique opens in London</h3>
+          <p class="tl-text">After decades of exclusively Parisian distribution, Maison Noire opens its first international boutique on <b>Bond Street, London</b>. The queue stretches around the block on opening day. The <i>New York Times</i> calls it <u>"the most anticipated opening of the decade."</u></p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal rd1">
+        <div class="tl-year-col"><span class="tl-year">1998</span><span class="tl-era">The new generation</span></div>
+        <div class="tl-content">
+          <h3 class="tl-title">Élise Beaumont takes creative direction</h3>
+          <p class="tl-text">At just 28, <b>Élise Beaumont</b> — great-granddaughter of the founder — becomes the youngest Master Perfumer in France. Her first creation, <i>Rose de Mai</i>, wins the <u>Prix du Parfum at Cannes</u>. She introduces the single-origin sourcing policy still in use today.</p>
+        </div>
+      </div>
+
+      <div class="tl-item reveal rd1">
+        <div class="tl-year-col"><span class="tl-year">2024</span><span class="tl-era">Today</span></div>
+        <div class="tl-content">
+          <h3 class="tl-title">The Collection expands to twelve fragrances</h3>
+          <p class="tl-text">For the <b>90th anniversary</b>, Maison Noire launches six new fragrances — including <i>Jasmin Absolu</i>, <i>Santal Noir</i>, and the acclaimed <i>Rose Oud</i>. The collection is now <u>available in 34 boutiques worldwide</u>. The obsession continues.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PERFUMERS -->
+<section class="perf-sec">
+  <div class="perf-inner">
+    <h2 class="sec-h reveal">Les <em>Parfumeurs</em></h2>
+    <div class="perf-grid">
+      <div class="perf-card reveal rd1">
+        <div class="perf-avatar">👩</div>
+        <h3 class="perf-name">Élise Beaumont</h3>
+        <span class="perf-role">Master Perfumer · Chef de Création</span>
+        <p class="perf-bio">Trained at <b>ISIPCA Versailles</b>, Élise has led creative direction for over two decades. Her signature is the use of <i>rare Assamese oud</i> as a structural base. She has won the Prix du Parfum <u>three times</u>.</p>
+      </div>
+      <div class="perf-card reveal rd2">
+        <div class="perf-avatar">👨</div>
+        <h3 class="perf-name">Henri Lacroix</h3>
+        <span class="perf-role">Perfumer · Matières Premières</span>
+        <p class="perf-bio">Henri oversees <b>raw material sourcing</b>, traveling the world to build relationships with growers. He has visited <u>over 40 countries</u> and maintains the library of <i>60+ rare ingredients</i> that defines the Noire palette.</p>
+      </div>
+      <div class="perf-card reveal rd3">
+        <div class="perf-avatar">👩</div>
+        <h3 class="perf-name">Camille Renard</h3>
+        <span class="perf-role">Junior Perfumer · Floral Specialist</span>
+        <p class="perf-bio">A specialist in <u>floral absolutes</u>, Camille created the acclaimed <i>Rose de Mai</i> and the new <i>Jasmin Absolu</i>. She bridges <b>tradition and modern sensibility</b> — the voice of a new generation of Noire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ NEW: AWARDS WALL -->
+<section class="awards-sec">
+  <div class="awards-inner">
+    <span class="sec-eye reveal">Reconnaissances</span>
+    <h2 class="reveal rd1">Recognition &amp; <em>awards</em></h2>
+    <div class="awards-grid">
+      <div class="award-card reveal rd1">
+        <span class="award-icon">🏆</span>
+        <h3 class="award-title">Prix du Parfum</h3>
+        <span class="award-org">Festival de Cannes</span>
+        <span class="award-year">2023</span>
+        <p class="award-desc">Awarded for <b>Oud Noir</b> — <i>"the most technically accomplished fragrance of the decade"</i> by the panel of master perfumers.</p>
+      </div>
+      <div class="award-card reveal rd2">
+        <span class="award-icon">🥇</span>
+        <h3 class="award-title">Best Luxury House</h3>
+        <span class="award-org">International Fragrance Awards</span>
+        <span class="award-year">2022</span>
+        <p class="award-desc">Voted <b>Best Luxury Perfume House</b> by over <i>2,000 industry professionals</i> across 50 countries. <u>The fourth time</u> Maison Noire has received this honour.</p>
+      </div>
+      <div class="award-card reveal rd3">
+        <span class="award-icon">⭐</span>
+        <h3 class="award-title">Perfumer of the Year</h3>
+        <span class="award-org">Fragrance Foundation Paris</span>
+        <span class="award-year">2021</span>
+        <p class="award-desc">Élise Beaumont named <b>Perfumer of the Year</b> for her work on the Noire collection — the <i>youngest person</i> to receive this award <u>three consecutive times</u>.</p>
+      </div>
+      <div class="award-card reveal rd4">
+        <span class="award-icon">💎</span>
+        <h3 class="award-title">Heritage Brand Award</h3>
+        <span class="award-org">Maison de la France</span>
+        <span class="award-year">2024</span>
+        <p class="award-desc">Recognised as an <b>official French Heritage Brand</b> on our 90th anniversary — one of only <i>twelve perfume houses</i> in history to receive this <u>rare distinction</u>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE / PROCESS -->
+<section class="experience">
+  <div class="exp-inner">
+    <h2 class="reveal">The <em>Noire</em> atelier</h2>
+    <div class="exp-grid">
+      <div class="exp-card reveal rd1"><div class="exp-num">01</div><span class="exp-icon">🧪</span><h3 class="exp-title">Source &amp; Select</h3><p class="exp-text">Our perfumers travel the world to forge <b>direct relationships</b> with growers of the rarest raw materials. <i>No intermediaries. No compromise.</i></p><div class="exp-line"></div></div>
+      <div class="exp-card reveal rd2"><div class="exp-num">02</div><span class="exp-icon">⚗️</span><h3 class="exp-title">Compose &amp; Age</h3><p class="exp-text">A formula may undergo <u>hundreds of iterations</u> over years. Fragrances are aged in glass for a minimum of <b>six months</b> before bottling.</p><div class="exp-line"></div></div>
+      <div class="exp-card reveal rd3"><div class="exp-num">03</div><span class="exp-icon">🫙</span><h3 class="exp-title">Fill &amp; Seal</h3><p class="exp-text">Each bottle is <b>filled by hand</b>, sealed with our signature gold collar, and engraved with a unique batch number. <i>Limited production only.</i></p><div class="exp-line"></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div><span class="ft-logo">NOIRE</span><p class="ft-tag">Haute Parfumerie since 1934. Crafted in Paris from the world's rarest essences.</p></div>
+    <div class="ft-col"><h4>Collection</h4><ul><li><a href="collection.html">Oriental</a></li><li><a href="collection.html">Floral</a></li><li><a href="collection.html">Woody</a></li><li><a href="collection.html">Limited</a></li></ul></div>
+    <div class="ft-col"><h4>Maison</h4><ul><li><a href="about.html">Notre Histoire</a></li><li><a href="about.html">Les Parfumeurs</a></li><li><a href="info.html">L'Atelier</a></li><li><a href="contact.html">Presse</a></li></ul></div>
+    <div class="ft-col"><h4>Service</h4><ul><li><a href="contact.html">Bespoke</a></li><li><a href="contact.html">Boutiques</a></li><li><a href="contact.html">Livraison</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="ft-bot"><p>© 2024 Maison Noire. Tous droits réservés. Paris.</p><div class="socials"><a href="#">IG</a><a href="#">TW</a><a href="#">FB</a><a href="#">PT</a></div></div>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function aC(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cur.style.left=mx+'px';cur.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(aC);})();
+document.querySelectorAll('a,button,.perf-card,.exp-card,.award-card').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.transform='translate(-50%,-50%) scale(1.6)';ring.style.borderColor='rgba(201,168,76,0.7)';});el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(201,168,76,0.45)';});});
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('s',window.scrollY>60));
+const mc=document.getElementById('mist-canvas'),mctx=mc.getContext('2d');
+function rMC(){mc.width=window.innerWidth;mc.height=window.innerHeight;} rMC();window.addEventListener('resize',rMC);
+let mists=[];
+class Mist{constructor(x,y){this.x=x;this.y=y;this.size=Math.random()*80+30;this.vx=(Math.random()-.5)*.5;this.vy=-Math.random()*.8-.3;this.life=0;this.maxLife=Math.random()*100+80;this.opacity=Math.random()*.08+.03;}update(){this.x+=this.vx;this.y+=this.vy;this.life++;this.size+=.5;}draw(){const a=this.opacity*(1-this.life/this.maxLife);mctx.beginPath();mctx.arc(this.x,this.y,this.size,0,Math.PI*2);const g=mctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.size);g.addColorStop(0,`rgba(176,96,128,${a})`);g.addColorStop(1,'rgba(45,22,80,0)');mctx.fillStyle=g;mctx.fill();}}
+let lm=0;document.addEventListener('mousemove',e=>{const n=Date.now();if(n-lm>40){mists.push(new Mist(e.clientX,e.clientY));lm=n;}});
+(function aM(){mctx.clearRect(0,0,mc.width,mc.height);mists=mists.filter(m=>m.life<m.maxLife);mists.forEach(m=>{m.update();m.draw();});requestAnimationFrame(aM);})();
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const cobs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.snum').forEach(n=>{const t=+n.dataset.target;let c=0;const inc=t/60;const ti=setInterval(()=>{c+=inc;if(c>=t){c=t;clearInterval(ti);}n.textContent=Math.floor(c);},20);});cobs.unobserve(e.target);}});},{threshold:0.5});
+document.querySelectorAll('.i-stats').forEach(el=>cobs.observe(el));
+</script>
+</body>
+</html>

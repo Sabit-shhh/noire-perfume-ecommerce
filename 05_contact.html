@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — NOIRE Haute Parfumerie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Raleway:wght@100;200;300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; user-select:none; }
+    :root {
+      --black:#080608; --deep:#0e0b12; --purple:#1a0f2e; --violet:#2d1650;
+      --gold:#c9a84c; --gold2:#e8d08a; --rose:#b06080; --cream:#f5ede0; --muted:#7a6e80;
+      --font-d:'Playfair Display',serif; --font-b:'Raleway',sans-serif;
+    }
+    html { scroll-behavior:smooth; overflow-x:hidden; }
+    body { background:var(--black); color:var(--cream); font-family:var(--font-b); font-weight:300; cursor:none; overflow-x:hidden; }
+    #cur { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:difference; transition:transform 0.15s; }
+    #cur-ring { position:fixed; width:44px; height:44px; border:1px solid rgba(201,168,76,0.45); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all 0.2s ease; }
+    #mist-canvas { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5; }
+
+    nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; justify-content:space-between; align-items:center; padding:32px 70px; transition:all 0.5s; background:rgba(8,6,8,0.93); backdrop-filter:blur(16px); border-bottom:1px solid rgba(201,168,76,0.1); }
+    nav.s { padding:20px 70px; }
+    .logo { font-family:var(--font-d); font-size:1.5rem; letter-spacing:0.5em; color:var(--cream); text-decoration:none; }
+    .nav-links { display:flex; gap:44px; list-style:none; }
+    .nav-links a { color:rgba(245,237,224,0.6); text-decoration:none; font-size:0.68rem; letter-spacing:0.25em; text-transform:uppercase; transition:color 0.3s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+
+    /* ── HERO ── */
+    .page-hero { min-height:85vh; display:flex; align-items:center; padding:160px 70px 80px; position:relative; overflow:hidden; background:var(--black); }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 40%,rgba(45,22,80,0.65),transparent 55%), radial-gradient(ellipse at 10% 70%,rgba(176,96,128,0.2),transparent 40%); pointer-events:none; }
+    .page-hero::after { content:'CONTACT'; position:absolute; right:-60px; bottom:-20px; font-family:var(--font-d); font-size:22vw; color:rgba(201,168,76,0.025); line-height:1; pointer-events:none; white-space:nowrap; }
+    .hero-grid { position:relative; z-index:1; max-width:1300px; margin:0 auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .hero-text .eyebrow { font-size:0.62rem; letter-spacing:0.6em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:24px; }
+    .hero-text h1 { font-family:var(--font-d); font-size:clamp(4rem,8vw,8rem); font-weight:300; line-height:0.9; color:var(--cream); margin-bottom:28px; }
+    .hero-text h1 em { font-style:italic; background:linear-gradient(135deg,var(--gold),var(--rose),var(--gold2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero-text p { font-size:0.88rem; color:var(--muted); line-height:2.2; margin-bottom:40px; max-width:460px; }
+    .btn-gold { display:inline-block; padding:15px 44px; background:transparent; border:1px solid var(--gold); color:var(--gold); text-decoration:none; font-size:0.68rem; letter-spacing:0.3em; text-transform:uppercase; transition:all 0.4s; position:relative; overflow:hidden; cursor:none; }
+    .btn-gold::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold),var(--rose)); transform:scaleX(0); transform-origin:left; transition:transform 0.4s; z-index:-1; }
+    .btn-gold:hover { color:var(--black); border-color:transparent; }
+    .btn-gold:hover::before { transform:scaleX(1); }
+    .hero-info { display:flex; flex-direction:column; gap:2px; }
+    .hc { padding:24px 28px; border:1px solid rgba(201,168,76,0.1); background:rgba(201,168,76,0.03); display:flex; gap:18px; align-items:flex-start; transition:all 0.4s; position:relative; overflow:hidden; }
+    .hc::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--rose),var(--gold)); transform:scaleY(0); transform-origin:top; transition:transform 0.4s; }
+    .hc:hover { background:rgba(45,22,80,0.25); border-color:rgba(201,168,76,0.22); }
+    .hc:hover::before { transform:scaleY(1); }
+    .hc-icon { font-size:1.5rem; flex-shrink:0; }
+    .hc-label { font-size:0.56rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:5px; }
+    .hc-main { font-size:0.84rem; color:var(--cream); font-weight:400; }
+    .hc-sub { font-size:0.72rem; color:var(--muted); margin-top:2px; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(48px); transition:opacity 1s ease, transform 1s ease; }
+    .reveal.v { opacity:1; transform:translateY(0); }
+    .rd1{transition-delay:0.1s;} .rd2{transition-delay:0.22s;} .rd3{transition-delay:0.36s;} .rd4{transition-delay:0.5s;}
+
+    /* ── FORM ── */
+    .contact-sec { background:var(--deep); padding:130px 70px; }
+    .contact-inner { max-width:1300px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:100px; }
+    .form-side h2 { font-family:var(--font-d); font-size:clamp(2rem,3.5vw,3.5rem); font-weight:300; color:var(--cream); margin-bottom:12px; }
+    .form-side h2 em { font-style:italic; color:var(--gold); }
+    .gold-line { width:50px; height:1px; background:var(--gold); margin:22px 0 34px; }
+    .form-side > p { font-size:0.82rem; color:var(--muted); line-height:2.1; margin-bottom:36px; }
+    .fg { margin-bottom:26px; }
+    .fg label { display:block; font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .fg input, .fg textarea, .fg select { width:100%; background:transparent; border:none; border-bottom:1px solid rgba(245,237,224,0.12); padding:12px 0; font-family:var(--font-b); font-size:0.82rem; color:var(--cream); outline:none; transition:border-color 0.3s; font-weight:300; user-select:text; }
+    .fg input:focus, .fg textarea:focus, .fg select:focus { border-bottom-color:var(--gold); }
+    .fg input::placeholder, .fg textarea::placeholder { color:rgba(245,237,224,0.18); }
+    .fg select option { background:var(--deep); color:var(--cream); }
+    .fg textarea { resize:none; height:90px; }
+    .sbtn { margin-top:12px; padding:15px 44px; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:var(--font-b); font-size:0.68rem; letter-spacing:0.3em; text-transform:uppercase; cursor:none; transition:all 0.4s; position:relative; overflow:hidden; }
+    .sbtn::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold),var(--rose)); transform:scaleX(0); transform-origin:left; transition:transform 0.4s; z-index:-1; }
+    .sbtn:hover { color:var(--black); border-color:transparent; }
+    .sbtn:hover::before { transform:scaleX(1); }
+    .info-side h2 { font-family:var(--font-d); font-size:clamp(2rem,3.5vw,3.5rem); font-weight:300; color:var(--cream); margin-bottom:12px; }
+    .info-side h2 em { font-style:italic; color:var(--rose); }
+    .info-side > p { font-size:0.82rem; color:var(--muted); line-height:2.1; margin-bottom:36px; }
+    .clist { display:flex; flex-direction:column; gap:24px; }
+    .ci { display:flex; gap:16px; align-items:flex-start; }
+    .ci-icon { font-size:1.2rem; flex-shrink:0; }
+    .ci-label { font-size:0.56rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:5px; }
+    .ci-val { font-size:0.82rem; color:var(--muted); line-height:2; }
+
+    /* ── BOUTIQUES ── */
+    .bout-sec { padding:130px 70px; background:var(--black); }
+    .section-head { max-width:1300px; margin:0 auto 60px; }
+    .sec-eye { font-size:0.62rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:16px; }
+    .sec-h { font-family:var(--font-d); font-size:clamp(2.5rem,4vw,4rem); font-weight:300; color:var(--cream); }
+    .sec-h em { font-style:italic; color:var(--gold); }
+    .bout-grid { max-width:1300px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+    .bout-card { background:var(--deep); padding:44px 34px; position:relative; overflow:hidden; border:1px solid rgba(201,168,76,0.06); transition:all 0.4s; }
+    .bout-card::after { content:''; position:absolute; bottom:0; left:0; height:2px; width:0; background:linear-gradient(to right,var(--rose),var(--gold)); transition:width 0.5s; }
+    .bout-card:hover { border-color:rgba(201,168,76,0.22); background:rgba(45,22,80,0.2); }
+    .bout-card:hover::after { width:100%; }
+    .bout-flag { font-size:2rem; display:block; margin-bottom:14px; }
+    .bout-city { font-family:var(--font-d); font-size:1.5rem; font-weight:300; color:var(--cream); margin-bottom:5px; }
+    .bout-country { font-size:0.58rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:18px; }
+    .bout-addr { font-size:0.8rem; color:var(--muted); line-height:2; }
+    .bout-hours { font-size:0.72rem; color:rgba(245,237,224,0.25); line-height:2; border-top:1px solid rgba(201,168,76,0.08); padding-top:14px; margin-top:14px; }
+    .flagship { position:absolute; top:18px; right:18px; font-size:0.5rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--black); background:var(--gold); padding:4px 9px; }
+
+    /* ── EXT LINKS ── */
+    .ext-sec { background:var(--deep); padding:100px 70px; }
+    .ext-inner { max-width:1300px; margin:0 auto; }
+    .ext-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:3px; margin-top:52px; }
+    .ext-card { background:var(--black); padding:40px 22px; text-align:center; text-decoration:none; display:block; position:relative; overflow:hidden; transition:background 0.4s; border-top:1px solid rgba(201,168,76,0.08); }
+    .ext-card::after { content:''; position:absolute; bottom:0; left:0; height:2px; width:0; background:linear-gradient(to right,var(--rose),var(--gold)); transition:width 0.5s; }
+    .ext-card:hover { background:rgba(45,22,80,0.35); }
+    .ext-card:hover::after { width:100%; }
+    .ext-icon { font-size:1.8rem; display:block; margin-bottom:14px; }
+    .ext-name { font-family:var(--font-d); font-size:0.95rem; font-weight:300; color:var(--cream); display:block; margin-bottom:10px; }
+    .ext-desc { font-size:0.68rem; color:var(--muted); line-height:1.9; display:block; margin-bottom:12px; }
+    .ext-url { font-size:0.54rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(201,168,76,0.5); display:block; }
+
+    /* ── FAQ ── */
+    .faq-sec { padding:130px 70px; background:var(--black); }
+    .faq-inner { max-width:860px; margin:0 auto; }
+    .faq-item { border-bottom:1px solid rgba(201,168,76,0.1); }
+    .faq-q { width:100%; background:transparent; border:none; display:flex; align-items:center; justify-content:space-between; padding:26px 0; cursor:none; text-align:left; gap:20px; }
+    .faq-q-text { font-family:var(--font-d); font-size:1.1rem; font-weight:300; color:var(--cream); line-height:1.4; transition:color 0.3s; }
+    .faq-icon { width:26px; height:26px; border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1rem; flex-shrink:0; transition:all 0.3s; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); background:rgba(201,168,76,0.1); }
+    .faq-item.open .faq-q-text { color:var(--gold); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height 0.5s ease, opacity 0.4s; opacity:0; }
+    .faq-item.open .faq-a { max-height:300px; opacity:1; }
+    .faq-a p { font-size:0.84rem; color:var(--muted); line-height:2.2; padding-bottom:26px; }
+
+    /* ── NEWSLETTER ── */
+    .newsletter { background:linear-gradient(135deg,var(--purple),var(--black)); text-align:center; padding:100px 70px; position:relative; overflow:hidden; }
+    .nl-orb { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(176,96,128,0.12),transparent); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; }
+    .nl-inner { max-width:660px; margin:0 auto; position:relative; z-index:1; }
+    .nl-inner h2 { font-family:var(--font-d); font-size:clamp(2rem,4vw,3.8rem); font-weight:300; color:var(--cream); line-height:1.1; margin-bottom:16px; }
+    .nl-inner h2 em { font-style:italic; color:var(--gold); }
+    .nl-inner p { font-size:0.82rem; color:var(--muted); margin-bottom:44px; line-height:2; }
+    .nl-form { display:flex; max-width:460px; margin:0 auto; border:1px solid rgba(201,168,76,0.25); }
+    .nl-form input { flex:1; padding:16px 22px; background:transparent; border:none; outline:none; font-family:var(--font-b); font-size:0.78rem; color:var(--cream); user-select:text; }
+    .nl-form input::placeholder { color:rgba(245,237,224,0.25); }
+    .nl-form button { padding:16px 26px; background:linear-gradient(135deg,var(--gold),var(--rose)); border:none; color:var(--black); font-family:var(--font-b); font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; cursor:none; transition:opacity 0.3s; font-weight:400; }
+    .nl-form button:hover { opacity:0.85; }
+
+    /* ── FOOTER ── */
+    footer { background:var(--black); padding:80px 70px 44px; border-top:1px solid rgba(201,168,76,0.08); }
+    .ft { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:60px; margin-bottom:60px; }
+    .ft-logo { font-family:var(--font-d); font-size:2.2rem; letter-spacing:0.4em; color:var(--cream); display:block; margin-bottom:18px; }
+    .ft-tag { font-size:0.78rem; color:var(--muted); line-height:2; max-width:230px; }
+    .ft-col h4 { font-size:0.6rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; }
+    .ft-col ul { list-style:none; display:flex; flex-direction:column; gap:13px; }
+    .ft-col a { font-size:0.78rem; color:var(--muted); text-decoration:none; transition:color 0.3s; }
+    .ft-col a:hover { color:var(--cream); }
+    .ft-bot { border-top:1px solid rgba(255,255,255,0.05); padding-top:28px; display:flex; justify-content:space-between; align-items:center; }
+    .ft-bot p { font-size:0.68rem; color:rgba(122,110,128,0.45); }
+    .socials { display:flex; gap:14px; }
+    .socials a { width:36px; height:36px; border:1px solid rgba(201,168,76,0.15); display:flex; align-items:center; justify-content:center; color:var(--muted); text-decoration:none; font-size:0.72rem; transition:all 0.3s; }
+    .socials a:hover { border-color:var(--gold); color:var(--gold); }
+
+    @media(max-width:900px){
+      nav{padding:22px 28px;} .nav-links{display:none;}
+      .page-hero{padding:130px 28px 70px;} .hero-grid{grid-template-columns:1fr;} .hero-info{display:grid;grid-template-columns:1fr 1fr;}
+      .contact-sec,.bout-sec,.ext-sec,.faq-sec,.newsletter{padding:80px 28px;}
+      .contact-inner{grid-template-columns:1fr;gap:60px;}
+      .bout-grid{grid-template-columns:1fr 1fr;} .ext-grid{grid-template-columns:1fr 1fr;}
+      .ft{grid-template-columns:1fr 1fr;gap:40px;}
+    }
+    @media(max-width:600px){
+      .hero-info,.bout-grid,.ext-grid{grid-template-columns:1fr;}
+      .ft{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<canvas id="mist-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="01_index.html" class="logo">NOIRE</a>
+  <ul class="nav-links">
+    <li><a href="01_index.html">Home</a></li>
+    <li><a href="02_collection.html">Collection</a></li>
+    <li><a href="04_about.html">Maison</a></li>
+    <li><a href="03_info.html">Atelier</a></li>
+    <li><a href="05_contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow">Nous Contacter · Get In Touch</span>
+      <h1>Reach<br><em>Maison</em><br>Noire</h1>
+      <p>Bespoke enquiries, boutique visits, press requests — our team responds within <b>48 hours</b>. Six <i>boutiques worldwide</i> ready to welcome you.</p>
+      <a href="#form" class="btn-gold">Send a Message</a>
+    </div>
+    <div class="hero-info">
+      <div class="hc">
+        <span class="hc-icon">📍</span>
+        <div>
+          <span class="hc-label">Paris Flagship</span>
+          <p class="hc-main"><b>24 Rue du Faubourg Saint-Honoré</b></p>
+          <p class="hc-sub">75008 Paris · Mon–Sat 10:00–19:00</p>
+        </div>
+      </div>
+      <div class="hc">
+        <span class="hc-icon">📞</span>
+        <div>
+          <span class="hc-label">Telephone</span>
+          <p class="hc-main"><b>+33 (0)1 42 65 10 34</b></p>
+          <p class="hc-sub">Available during boutique hours</p>
+        </div>
+      </div>
+      <div class="hc">
+        <span class="hc-icon">✉️</span>
+        <div>
+          <span class="hc-label">Email</span>
+          <p class="hc-main"><b>contact@maisonnoire.fr</b></p>
+          <p class="hc-sub">Response within 48 hours</p>
+        </div>
+      </div>
+      <div class="hc">
+        <span class="hc-icon">🌍</span>
+        <div>
+          <span class="hc-label">Boutiques</span>
+          <p class="hc-main"><b>Paris · London · Dubai</b></p>
+          <p class="hc-sub">Tokyo · New York · Milan</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM + DETAILS -->
+<section class="contact-sec" id="form">
+  <div class="contact-inner">
+    <div class="form-side reveal">
+      <h2>Send us a <em>message</em></h2>
+      <div class="gold-line"></div>
+      <p>Fill in the form and our team will respond within <b>48 hours</b>. For <i>urgent bespoke enquiries</i>, please call our Paris atelier directly.</p>
+      <div class="fg"><label for="fname">Full Name</label><input type="text" id="fname" placeholder="Your full name"/></div>
+      <div class="fg"><label for="femail">Email Address</label><input type="email" id="femail" placeholder="your@email.com"/></div>
+      <div class="fg">
+        <label for="fsubj">Subject</label>
+        <select id="fsubj">
+          <option value="">Select a subject</option>
+          <option>Bespoke Fragrance</option>
+          <option>Order Enquiry</option>
+          <option>Boutique Visit</option>
+          <option>Press &amp; Media</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label for="fmsg">Message</label><textarea id="fmsg" placeholder="Your message..."></textarea></div>
+      <button class="sbtn" id="sbtn" type="button">Send Message</button>
+    </div>
+    <div class="info-side reveal rd2">
+      <h2>Our <em>details</em></h2>
+      <div class="gold-line"></div>
+      <p>Maison Noire has been at the heart of <b>Parisian perfumery</b> since 1934. Visit our atelier or reach us by phone or email.</p>
+      <div class="clist">
+        <div class="ci"><span class="ci-icon">📍</span><div><span class="ci-label">Atelier &amp; Boutique</span><p class="ci-val"><b>24 Rue du Faubourg Saint-Honoré</b><br>75008 Paris, <i>France</i></p></div></div>
+        <div class="ci"><span class="ci-icon">📞</span><div><span class="ci-label">Telephone</span><p class="ci-val">+33 (0)1 42 65 <u>10 34</u></p></div></div>
+        <div class="ci"><span class="ci-icon">✉️</span><div><span class="ci-label">Email</span><p class="ci-val">contact@maisonnoire.fr<br>presse@maisonnoire.fr</p></div></div>
+        <div class="ci"><span class="ci-icon">🕐</span><div><span class="ci-label">Opening Hours</span><p class="ci-val"><b>Monday – Friday:</b> 10:00 – 19:00<br><b>Saturday:</b> 10:00 – 18:00<br><i>Sunday: Closed</i></p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOUTIQUES -->
+<section class="bout-sec">
+  <div class="section-head reveal">
+    <span class="sec-eye">Nos Boutiques</span>
+    <h2 class="sec-h">Find us around the <em>world</em></h2>
+  </div>
+  <div class="bout-grid">
+    <div class="bout-card reveal rd1">
+      <span class="flagship">Flagship</span>
+      <span class="bout-flag">🇫🇷</span>
+      <h3 class="bout-city">Paris</h3>
+      <span class="bout-country">France · Est. 1934</span>
+      <p class="bout-addr"><b>24 Rue du Faubourg Saint-Honoré</b><br>75008 Paris<br><i>Nearest metro: Concorde</i></p>
+      <div class="bout-hours"><b>Mon–Fri:</b> 10:00–19:00<br><b>Sat:</b> 10:00–18:00 · <i>Sun: Closed</i></div>
+    </div>
+    <div class="bout-card reveal rd2">
+      <span class="bout-flag">🇬🇧</span>
+      <h3 class="bout-city">London</h3>
+      <span class="bout-country">United Kingdom · Est. 1979</span>
+      <p class="bout-addr"><b>42 New Bond Street</b><br>Mayfair, London W1S 2RY<br><i>Nearest tube: Bond Street</i></p>
+      <div class="bout-hours"><b>Mon–Sat:</b> 10:00–18:30<br><b>Sun:</b> 12:00–17:00</div>
+    </div>
+    <div class="bout-card reveal rd3">
+      <span class="bout-flag">🇦🇪</span>
+      <h3 class="bout-city">Dubai</h3>
+      <span class="bout-country">UAE · Est. 2008</span>
+      <p class="bout-addr"><b>Level 1, The Dubai Mall</b><br>Downtown Dubai<br><i>Near Fashion Avenue</i></p>
+      <div class="bout-hours"><b>Daily:</b> 10:00–22:00<br><i>Fri–Sat until midnight</i></div>
+    </div>
+    <div class="bout-card reveal rd1">
+      <span class="bout-flag">🇯🇵</span>
+      <h3 class="bout-city">Tokyo</h3>
+      <span class="bout-country">Japan · Est. 2015</span>
+      <p class="bout-addr"><b>6-9-5 Minami-Aoyama</b><br>Minato-ku, Tokyo 107-0062<br><i>Nearest: Omote-sando</i></p>
+      <div class="bout-hours"><b>Tue–Sun:</b> 11:00–19:00<br><i>Closed Monday</i></div>
+    </div>
+    <div class="bout-card reveal rd2">
+      <span class="bout-flag">🇺🇸</span>
+      <h3 class="bout-city">New York</h3>
+      <span class="bout-country">USA · Est. 2019</span>
+      <p class="bout-addr"><b>812 Madison Avenue</b><br>Upper East Side, NY 10065<br><i>Nearest: 77 St – Lexington</i></p>
+      <div class="bout-hours"><b>Mon–Sat:</b> 10:00–18:00<br><b>Sun:</b> 12:00–17:00</div>
+    </div>
+    <div class="bout-card reveal rd3">
+      <span class="bout-flag">🇮🇹</span>
+      <h3 class="bout-city">Milan</h3>
+      <span class="bout-country">Italy · Est. 2022</span>
+      <p class="bout-addr"><b>Via Montenapoleone 12</b><br>20121 Milan<br><i>Nearest: Montenapoleone</i></p>
+      <div class="bout-hours"><b>Mon–Sat:</b> 10:00–19:00<br><i>Sun: Closed</i></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXTERNAL LINKS -->
+<section class="ext-sec">
+  <div class="ext-inner">
+    <span class="sec-eye reveal">Explore Further</span>
+    <h2 class="sec-h reveal rd1">The world of <em>parfumerie</em></h2>
+    <div class="ext-grid reveal rd2">
+      <a href="https://www.chanel.com/en_GB/fragrance/" target="_blank" class="ext-card">
+        <span class="ext-icon">✦</span><span class="ext-name">Chanel</span>
+        <span class="ext-desc">Creator of <b>N°5</b> — the world's most iconic fragrance, launched in <u>1921</u>.</span>
+        <span class="ext-url">↗ chanel.com</span>
+      </a>
+      <a href="https://www.dior.com/en_gb/beauty/fragrance" target="_blank" class="ext-card">
+        <span class="ext-icon">✦</span><span class="ext-name">Dior</span>
+        <span class="ext-desc">Home of <b>Sauvage</b> and <i>Miss Dior</i> — blending couture with perfumery since <u>1947</u>.</span>
+        <span class="ext-url">↗ dior.com</span>
+      </a>
+      <a href="https://www.guerlain.com/en_GB/fragrance" target="_blank" class="ext-card">
+        <span class="ext-icon">✦</span><span class="ext-name">Guerlain</span>
+        <span class="ext-desc">Founded in <u>1828</u> in Paris — one of the <b>oldest perfume houses</b> in the world.</span>
+        <span class="ext-url">↗ guerlain.com</span>
+      </a>
+      <a href="https://www.creedfrgrances.com" target="_blank" class="ext-card">
+        <span class="ext-icon">✦</span><span class="ext-name">Creed</span>
+        <span class="ext-desc">The <b>ultra-luxury</b> house beloved by royalty — known for <i>Aventus</i>.</span>
+        <span class="ext-url">↗ creedfrgrances.com</span>
+      </a>
+      <a href="https://www.fragrantica.com" target="_blank" class="ext-card">
+        <span class="ext-icon">✦</span><span class="ext-name">Fragrantica</span>
+        <span class="ext-desc">The world's largest <b>perfume encyclopaedia</b> — <i>reviews and guides</i>.</span>
+        <span class="ext-url">↗ fragrantica.com</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-sec">
+  <div class="faq-inner">
+    <span class="sec-eye reveal">Questions Fréquentes</span>
+    <h2 class="sec-h reveal rd1" style="margin-bottom:52px;">Frequently asked <em>questions</em></h2>
+    <div class="faq-item reveal">
+      <button class="faq-q"><span class="faq-q-text">Do you offer international shipping?</span><div class="faq-icon">+</div></button>
+      <div class="faq-a"><p>Yes — Maison Noire ships to <b>over 50 countries</b>. All orders are shipped in temperature-controlled packaging. France: 2–3 days. EU: 3–5 days. International: <u>7–14 days</u>.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q"><span class="faq-q-text">What is a bespoke fragrance?</span><div class="faq-icon">+</div></button>
+      <div class="faq-a"><p>A <b>completely unique scent created exclusively for you</b>. Begins with a private consultation at our Paris atelier. Over <u>3–6 months</u>, your formula is developed through multiple iterations. <b>Starting from €8,500.</b></p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q"><span class="faq-q-text">How should I store my fragrances?</span><div class="faq-icon">+</div></button>
+      <div class="faq-a"><p>Keep bottles <i>away from direct sunlight</i>, heat, and humidity. Ideal: a cool, dark space at 15–20°C. <b>Avoid bathrooms.</b> An Eau de Parfum stored correctly maintains its character for <u>5–7 years</u>.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q"><span class="faq-q-text">Are Noire fragrances cruelty-free?</span><div class="faq-icon">+</div></button>
+      <div class="faq-a"><p><b>Yes — completely cruelty-free.</b> We use only <i>synthetic musks</i>, our packaging is <u>100% recyclable</u>, and we are certified by the Leaping Bunny Programme.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q"><span class="faq-q-text">Can I visit the Paris atelier?</span><div class="faq-icon">+</div></button>
+      <div class="faq-a"><p>Our boutique is open <b>Mon–Fri 10–19, Sat 10–18</b> — no appointment needed to browse. <i>Private consultations</i> require advance booking. <u>Bespoke appointments</u> need 4 weeks' notice.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="nl-orb"></div>
+  <div class="nl-inner">
+    <h2 class="reveal">Enter the <em>inner circle</em></h2>
+    <p class="reveal rd1">Receive private invitations to limited releases and exclusive access to our master perfumer's notes.</p>
+    <div class="nl-form reveal rd2">
+      <input type="email" placeholder="Votre adresse e-mail"/>
+      <button type="button" id="nl-btn">S'inscrire</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div><span class="ft-logo">NOIRE</span><p class="ft-tag">Haute Parfumerie since 1934. Crafted in Paris from the world's rarest essences.</p></div>
+    <div class="ft-col"><h4>Collection</h4><ul><li><a href="collection.html">Oriental</a></li><li><a href="collection.html">Floral</a></li><li><a href="collection.html">Woody</a></li><li><a href="collection.html">Limited</a></li></ul></div>
+    <div class="ft-col"><h4>Maison</h4><ul><li><a href="about.html">Notre Histoire</a></li><li><a href="about.html">Les Parfumeurs</a></li><li><a href="info.html">L'Atelier</a></li><li><a href="contact.html">Presse</a></li></ul></div>
+    <div class="ft-col"><h4>Service</h4><ul><li><a href="contact.html">Bespoke</a></li><li><a href="contact.html">Boutiques</a></li><li><a href="contact.html">Livraison</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="ft-bot">
+    <p>© 2024 Maison Noire. Tous droits réservés. Paris.</p>
+    <div class="socials"><a href="#">IG</a><a href="#">TW</a><a href="#">FB</a><a href="#">PT</a></div>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function aC(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cur.style.left=mx+'px';cur.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(aC);})();
+document.querySelectorAll('a,button,.hc,.bout-card,.ext-card,.faq-q').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';ring.style.transform='translate(-50%,-50%) scale(1.6)';ring.style.borderColor='rgba(201,168,76,0.7)';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(201,168,76,0.45)';});
+});
+
+// NAVBAR
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('s',window.scrollY>60));
+
+// MIST
+const mc=document.getElementById('mist-canvas'),mctx=mc.getContext('2d');
+function rMC(){mc.width=window.innerWidth;mc.height=window.innerHeight;} rMC();window.addEventListener('resize',rMC);
+let mists=[];
+class Mist{constructor(x,y){this.x=x;this.y=y;this.size=Math.random()*80+30;this.vx=(Math.random()-.5)*.5;this.vy=-Math.random()*.8-.3;this.life=0;this.maxLife=Math.random()*100+80;this.opacity=Math.random()*.08+.03;}update(){this.x+=this.vx;this.y+=this.vy;this.life++;this.size+=.5;}draw(){const a=this.opacity*(1-this.life/this.maxLife);mctx.beginPath();mctx.arc(this.x,this.y,this.size,0,Math.PI*2);const g=mctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.size);g.addColorStop(0,`rgba(176,96,128,${a})`);g.addColorStop(1,'rgba(45,22,80,0)');mctx.fillStyle=g;mctx.fill();}}
+let lm=0;document.addEventListener('mousemove',e=>{const n=Date.now();if(n-lm>40){mists.push(new Mist(e.clientX,e.clientY));lm=n;}});
+(function aM(){mctx.clearRect(0,0,mc.width,mc.height);mists=mists.filter(m=>m.life<m.maxLife);mists.forEach(m=>{m.update();m.draw();});requestAnimationFrame(aM);})();
+
+// REVEAL
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target);}});
+},{threshold:0.06});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// NEWSLETTER
+document.getElementById('nl-btn').addEventListener('click',function(){
+  const i=document.querySelector('.nl-form input');
+  if(i.value.includes('@')){this.textContent='Merci ✓';i.value='';setTimeout(()=>this.textContent="S'inscrire",3000);}
+});
+
+// FORM
+document.getElementById('sbtn').addEventListener('click',function(){
+  const n=document.getElementById('fname').value,e=document.getElementById('femail').value;
+  if(n&&e.includes('@')){this.textContent='Message Sent ✓';this.style.borderColor='rgba(201,168,76,0.5)';setTimeout(()=>{this.textContent='Send Message';this.style.borderColor='';},3000);}
+});
+
+// FAQ
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen)item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
