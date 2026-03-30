@@ -19,6 +19,9 @@ This project consists of 5 interconnected pages, all sharing the unified Noire D
 - **The Alchemist (about.html):** Explains the craftsmanship, rare ingredients, and story behind the Noire brand.
 - **Concierge (contact.html):** A sophisticated inquiry form for bespoke scent consultations and customer support.
 
+## LIVE WEBSITE
+- https://sabit-shhh.github.io/noire-perfume-ecommerce/01_index.html
+
 ## ⚖️ LEGAL & ANTI-PLAGIARISM NOTICE
 **THIS IS AN ORIGINAL EDUCATIONAL WORK.**
 
