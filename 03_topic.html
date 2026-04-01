@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Atelier — NOIRE Haute Parfumerie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Raleway:wght@100;200;300;400&display=swap" rel="stylesheet"/>
+  <link href="assets/css/topic.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div><canvas id="mist-canvas"></canvas>
+
+<nav id="nav">
+  <a href="01_index.html" class="logo">NOIRE</a>
+  <ul class="nav-links">
+    <li><a href="01_index.html">Home</a></li>
+    <li><a href="02_collection.html">Collection</a></li>
+    <li><a href="04_about.html">Maison</a></li>
+    <li><a href="03_topic.html" class="active">Atelier</a></li>
+    <li><a href="05_contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">L'Atelier · The Art of Scent</span>
+      <h1>The <em>olfactory</em><br>world</h1>
+      <p>The science and poetry behind <b>haute parfumerie</b>. Explore the olfactory pyramid, the five scent families, our <i>rarest ingredients</i>, and the complete Noire reference.</p>
+      <a href="#pyramid" class="btn-gold">Explore the Atelier</a>
+    </div>
+    <div class="hero-pyramid">
+      <p class="hp-label">Top Notes · First impression</p>
+      <div class="hp-row reveal rd1">
+        <div class="hp-pill">Bergamot</div>
+        <div class="hp-pill">Pink Pepper</div>
+        <div class="hp-pill">Cardamom</div>
+      </div>
+      <div class="hp-line"></div>
+      <p class="hp-label">Heart Notes · The soul</p>
+      <div class="hp-row reveal rd2">
+        <div class="hp-pill">Rose Absolute</div>
+        <div class="hp-pill">Oud</div>
+        <div class="hp-pill">Iris</div>
+      </div>
+      <div class="hp-line"></div>
+      <p class="hp-label">Base Notes · The memory</p>
+      <div class="hp-row reveal rd3">
+        <div class="hp-pill">Amber</div>
+        <div class="hp-pill">Musk</div>
+        <div class="hp-pill">Vetiver</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PYRAMID -->
+<section class="olfactory" id="pyramid">
+  <div class="olf-inner">
+    <h2 class="reveal">The <em>olfactory pyramid</em></h2>
+    <p class="olf-sub reveal rd1">Every great perfume is a journey through <b>three acts</b><br><i>Top notes greet you. Heart notes define you. Base notes stay with you.</i></p>
+    <div class="pyramid reveal rd2">
+      <p class="pyr-label">Top Notes · First impression · 15–30 min</p>
+      <div class="pyr-row"><div class="note-pill">Bergamot</div><div class="note-pill">Pink Pepper</div><div class="note-pill">Aldehydes</div><div class="note-pill">Cardamom</div></div>
+      <p class="pyr-label" style="margin-top:24px;">Heart Notes · The soul · 2–4 hours</p>
+      <div class="pyr-row" style="transform:scale(0.95)"><div class="note-pill">Rose Absolute</div><div class="note-pill">Oud</div><div class="note-pill">Iris Root</div></div>
+      <p class="pyr-label" style="margin-top:24px;">Base Notes · The memory · 6+ hours</p>
+      <div class="pyr-row" style="transform:scale(0.88)"><div class="note-pill">Amber</div><div class="note-pill">Musk</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ NEW: SCENT FAMILIES GRID -->
+<section class="families-sec">
+  <div class="fam-inner">
+    <span class="sec-eye reveal">Les Familles Olfactives</span>
+    <h2 class="reveal rd1">The five scent <em>families</em></h2>
+    <div class="fam-grid reveal rd2">
+      <div class="fam-card f-oriental">
+        <span class="fam-icon">🌑</span>
+        <span class="fam-name">Oriental</span>
+        <p class="fam-desc">Rich, warm, and deeply sensual. Built on resins, spices, and woods from the East. <b>The oldest family</b> in perfumery.</p>
+        <div class="fam-examples">
+          <span class="fam-ex">Oud Noir</span>
+          <span class="fam-ex">Patchouli Sacré</span>
+          <span class="fam-ex">Rose Oud</span>
+        </div>
+      </div>
+      <div class="fam-card f-floral">
+        <span class="fam-icon">🌹</span>
+        <span class="fam-name">Floral</span>
+        <p class="fam-desc">The world's most popular family. Single flower or bouquet — <i>from dewy morning rose</i> to <b>narcotic tuberose at midnight</b>.</p>
+        <div class="fam-examples">
+          <span class="fam-ex">Rose de Mai</span>
+          <span class="fam-ex">Iris Poudré</span>
+          <span class="fam-ex">Jasmin Absolu</span>
+        </div>
+      </div>
+      <div class="fam-card f-woody">
+        <span class="fam-icon">🌿</span>
+        <span class="fam-name">Woody</span>
+        <p class="fam-desc">Grounded, dry, and enduring. Sandalwood, cedar, vetiver — <u>ingredients that evoke ancient forests</u> and <i>smoldering earth</i>.</p>
+        <div class="fam-examples">
+          <span class="fam-ex">Vétiver Brûlé</span>
+          <span class="fam-ex">Santal Noir</span>
+        </div>
+      </div>
+      <div class="fam-card f-amber">
+        <span class="fam-icon">🌙</span>
+        <span class="fam-name">Amber</span>
+        <p class="fam-desc">Warm, powdery, and enveloping. Labdanum, benzoin, vanilla — <b>scents that cling to skin</b> like a <i>warm memory</i>.</p>
+        <div class="fam-examples">
+          <span class="fam-ex">Ambre Mystique</span>
+          <span class="fam-ex">Musc Blanc</span>
+        </div>
+      </div>
+      <div class="fam-card f-aromatic">
+        <span class="fam-icon">🔵</span>
+        <span class="fam-name">Aromatic</span>
+        <p class="fam-desc">Fresh, herbal, meditative. Frankincense, bergamot, vetiver — ingredients used in <b>sacred rituals</b> for <u>thousands of years</u>.</p>
+        <div class="fam-examples">
+          <span class="fam-ex">Encens Sacré</span>
+          <span class="fam-ex">Bergamote d'Or</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TABLE -->
+<section class="table-sec">
+  <div class="table-inner">
+    <span class="sec-eye">Complete Reference</span>
+    <h2 class="reveal" style="margin-top:16px;">Our <em>fragrance</em> collection</h2>
+    <div class="gold-line"></div>
+    <p class="table-sub reveal rd1">All twelve Noire fragrances — <b>olfactory family</b>, <i>key ingredients</i>, concentration, and pricing.</p>
+    <table class="frag-table reveal rd2">
+      <thead><tr><th>Fragrance</th><th>Family</th><th>Key Notes</th><th>Size</th><th>Status</th><th>Price</th></tr></thead>
+      <tbody>
+        <tr><td>🌑 Oud Noir</td><td>Oriental · Woody</td><td>Oud, Saffron, <b>Amber</b></td><td>50ml</td><td><span class="badge b-sig">Signature</span></td><td><span class="price-tag">€320</span></td></tr>
+        <tr><td>🌹 Rose de Mai</td><td>Floral · Powdery</td><td><i>Centifolia</i>, Iris, Musk</td><td>30ml</td><td><span class="badge b-ico">Iconic</span></td><td><span class="price-tag">€280</span></td></tr>
+        <tr><td>🔵 Encens Sacré</td><td>Aromatic · Resinous</td><td>Frankincense, Myrrh, <b>Vetiver</b></td><td>100ml</td><td><span class="badge b-new">New</span></td><td><span class="price-tag">€360</span></td></tr>
+        <tr><td>✨ Iris Poudré</td><td>Floral · Chypre</td><td><u>Iris</u>, Violet, Sandalwood</td><td>50ml</td><td><span class="badge b-lim">Limited</span></td><td><span class="price-tag">€440</span></td></tr>
+        <tr><td>🌙 Ambre Mystique</td><td>Amber · Gourmand</td><td>Labdanum, Benzoin, <i>Vanilla</i></td><td>50ml</td><td><span class="badge b-rar">Rare</span></td><td><span class="price-tag">€390</span></td></tr>
+        <tr><td>🌿 Vétiver Brûlé</td><td>Woody · Smoky</td><td><b>Vetiver</b>, Birch Tar, Cedar</td><td>100ml</td><td><span class="badge b-uni">Unisex</span></td><td><span class="price-tag">€310</span></td></tr>
+        <tr><td>🌺 Jasmin Absolu</td><td>Floral · Indolic</td><td>Jasmine, Tuberose, <i>Sandalwood</i></td><td>50ml</td><td><span class="badge b-new">New 2024</span></td><td><span class="price-tag">€340</span></td></tr>
+        <tr><td>🕯️ Santal Noir</td><td>Woody · Creamy</td><td><b>Sandalwood</b>, Cardamom, Tonka</td><td>100ml</td><td><span class="badge b-new">New 2024</span></td><td><span class="price-tag">€350</span></td></tr>
+        <tr><td>🫧 Musc Blanc</td><td>Amber · Clean</td><td>White Musk, Cashmere, <i>Iris</i></td><td>30ml</td><td><span class="badge b-lim">Limited</span></td><td><span class="price-tag">€295</span></td></tr>
+        <tr><td>🌾 Patchouli Sacré</td><td>Oriental · Earthy</td><td>Patchouli, Oud, <b>Dark Rum</b></td><td>50ml</td><td><span class="badge b-rar">Rare</span></td><td><span class="price-tag">€375</span></td></tr>
+        <tr><td>🍋 Bergamote d'Or</td><td>Aromatic · Citrus</td><td><u>Bergamot</u>, Neroli, Vetiver</td><td>100ml</td><td><span class="badge b-uni">Unisex</span></td><td><span class="price-tag">€265</span></td></tr>
+        <tr><td>🌸 Rose Oud</td><td>Floral · Oriental</td><td>Taif Rose, <b>Cambodian Oud</b></td><td>50ml</td><td><span class="badge b-exc">Exclusive</span></td><td><span class="price-tag">€420</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ★ NEW: INTERACTIVE INGREDIENT CARDS -->
+<section class="ingredients-sec">
+  <div class="ing-inner">
+    <span class="sec-eye reveal">Click to Explore</span>
+    <h2 class="reveal rd1">The rarest <em>ingredients</em></h2>
+    <p class="ing-sub reveal rd2">Click any ingredient to learn where it comes from, how it is made, and which Noire fragrances it inhabits.</p>
+    <div class="ing-grid">
+
+      <div class="ing-card reveal rd1">
+        <div class="ing-header"><span class="ing-emoji">🪵</span><div><p class="ing-title">Assam Oud</p><p class="ing-origin">Assam · Northeast India</p></div><div class="ing-toggle">+</div></div>
+        <div class="ing-body"><p>The most sought-after oud in the world. When the <b>Aquilaria tree</b> is infected, it produces a dark, fragrant resin over <i>decades</i>. Only infected trees — perhaps <u>one in a hundred</u> — produce oud of this quality.</p><p>A single kilogram of Assam oud oil can cost over <b>€10,000</b>. Maison Noire sources directly from a single family farm that has cultivated Aquilaria trees for three generations.</p><span class="ing-used">Used in: Oud Noir, Rose Oud, Patchouli Sacré</span></div>
+      </div>
+
+      <div class="ing-card reveal rd2">
+        <div class="ing-header"><span class="ing-emoji">🌹</span><div><p class="ing-title">Centifolia Rose</p><p class="ing-origin">Grasse · Southern France</p></div><div class="ing-toggle">+</div></div>
+        <div class="ing-body"><p>The <b>Rose de Mai</b> — also called the cabbage rose — blooms for only a few weeks each May in the fields around <i>Grasse, France</i>. It must be harvested <u>at dawn</u>, by hand, before the sun opens the petals fully and the fragrance escapes.</p><p>Approximately <b>four tonnes</b> of rose petals are required to produce just one kilogram of rose absolute. The scent cannot be replicated synthetically.</p><span class="ing-used">Used in: Rose de Mai, Rose Oud</span></div>
+      </div>
+
+      <div class="ing-card reveal rd3">
+        <div class="ing-header"><span class="ing-emoji">🌿</span><div><p class="ing-title">Haitian Vetiver</p><p class="ing-origin">Gonâve Island · Haiti</p></div><div class="ing-toggle">+</div></div>
+        <div class="ing-body"><p>Vetiver is a tropical grass whose roots grow <b>three metres deep</b> into the earth — the deepest of any grass. The roots absorb and concentrate the minerals of the soil, giving Haitian vetiver its uniquely <i>smoky, roasted quality</i>.</p><p>Maison Noire uses only Haitian vetiver — considered the finest variety — slow-roasted over <u>wood coals</u> to intensify its dark, complex character before distillation.</p><span class="ing-used">Used in: Vétiver Brûlé, Encens Sacré, Bergamote d'Or</span></div>
+      </div>
+
+      <div class="ing-card reveal rd1">
+        <div class="ing-header"><span class="ing-emoji">🌾</span><div><p class="ing-title">Labdanum</p><p class="ing-origin">Crete · Greece</p></div><div class="ing-toggle">+</div></div>
+        <div class="ing-body"><p>A resin that oozes from the <b>Cistus ladanifer</b> shrub in the heat of Mediterranean summer. Historically, labdanum was combed from the beards of <i>goats that grazed among the shrubs</i> — the resin would cling to their hair.</p><p>Its scent is deeply <b>animalic and warm</b> — often described as the smell of <u>"skin in sun"</u>. It is one of the oldest perfumery ingredients in the world, used in ancient Egypt over 4,000 years ago.</p><span class="ing-used">Used in: Ambre Mystique</span></div>
+      </div>
+
+      <div class="ing-card reveal rd2">
+        <div class="ing-header"><span class="ing-emoji">🍂</span><div><p class="ing-title">Iris Root (Orris)</p><p class="ing-origin">Florence · Tuscany, Italy</p></div><div class="ing-toggle">+</div></div>
+        <div class="ing-body"><p>The <b>rhizome</b> (root) of the Iris pallida flower, grown in the hills around <i>Florence</i>. After harvesting, the roots must be dried and aged for <u>three to five years</u> before the orris butter — the fragrant extract — develops fully.</p><p>The resulting ingredient smells of <b>violets, powder, and cold stone</b> — ethereal and unmistakeable. One of the most expensive natural ingredients in perfumery, over €100,000 per kilogram.</p><span class="ing-used">Used in: Iris Poudré, Musc Blanc, Rose de Mai</span></div>
+      </div>
+
+      <div class="ing-card reveal rd3">
+        <div class="ing-header"><span class="ing-emoji">🌟</span><div><p class="ing-title">Kashmiri Saffron</p><p class="ing-origin">Pampore · Kashmir, India</p></div><div class="ing-toggle">+</div></div>
+        <div class="ing-body"><p>The most expensive spice in the world by weight. Each <b>Crocus sativus</b> flower produces just three stigmas — which must be harvested <i>by hand</i> within hours of the flower opening, in <u>October only</u>, before sunrise.</p><p>Kashmiri saffron has a <b>deeper, more honeyed character</b> than Iranian saffron, with a distinct metallic warmth that amplifies oud and amber. Approximately 150,000 flowers yield just one kilogram.</p><span class="ing-used">Used in: Oud Noir, Rose Oud</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div><span class="ft-logo">NOIRE</span>
+      <p class="ft-tag">Haute Parfumerie since 1934. Crafted in Paris from the world's rarest essences.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Collection</h4>
+      <ul>
+        <li><a href="02_collection.html">Oriental</a></li>
+        <li><a href="02_collection.html">Floral</a></li>
+        <li><a href="02_collection.html">Woody</a></li>
+        <li><a href="02_collection.html">Limited</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Maison</h4>
+      <ul>
+        <li><a href="04_about.html">Notre Histoire</a></li>
+        <li><a href="04_about.html">Les Parfumeurs</a></li>
+        <li><a href="04_about.html">L'Atelier</a></li>
+        <li><a href="04_about.html">Presse</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Service</h4>
+      <ul>
+        <li><a href="05_contact.html">Bespoke</a></li>
+        <li><a href="05_contact.html">Boutiques</a></li>
+        <li><a href="05_contact.html">Livraison</a></li>
+        <li><a href="05_contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <p>© 2024 Maison Noire. Tous droits réservés. Paris.</p>
+    <div class="socials"><a href="#">IG</a><a href="#">TW</a><a href="#">FB</a><a href="#">PT</a></div>
+  </div>
+</footer>
+
+<script src="assets/js/topic.js"></script>
+</body>
+</html>
