@@ -27,6 +27,7 @@ This project consists of 5 interconnected pages, all sharing the unified Noire D
 
 *   **Design & Code:** All CSS styling and layout architecture are the intellectual property of the developer. 
 *   **Images:** Perfume photography is used for **conceptual and educational purposes only**. Original rights belong to the respective photographers.
+*   **Text Content:** Written with the assistance of AI for conceptual/placeholder purposes. All logic, structure, and styling remain original work.
 *   **Warning:** This project is time-stamped via GitHub. Unauthorized copying or "forking" of this code for school submissions is considered a violation of academic integrity and will be reported.
 
 ---
